@@ -54,13 +54,30 @@ LIMIT 3;
     -- 1. 名稱為 `7 堂組合包方案`，價格為`1,400` 元，堂數為`7`
     -- 2. 名稱為`14 堂組合包方案`，價格為`2,520` 元，堂數為`14`
     -- 3. 名稱為 `21 堂組合包方案`，價格為`4,800` 元，堂數為`21`
-
+INSERT INTO "CREDIT_PACKAGE" (name, price, credit_amount)
+VALUES 
+   ('7 堂組合包方案', 7, 1400),
+   ('14 堂組合包方案', 14, 2500),
+   ('21 堂組合包方案', 21, 4800);
 
 -- 2-2. 新增：在 `CREDIT_PURCHASE` 資料表，新增三筆資料：（請使用 name 欄位做子查詢）
     -- 1. `王小明` 購買 `14 堂組合包方案`
     -- 2. `王小明` 購買 `21 堂組合包方案`
     -- 3. `好野人` 購買 `14 堂組合包方案`
-
+INSERT INTO "CREDIT_PURCHASE" (user_id, credit_package_id, purchased_credits, price_paid) 
+VALUES
+   ((SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io'),
+   (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案'),
+   (select credit_amount from "CREDIT_PACKAGE" where name = '14 堂組合包方案'),
+   (select price from "CREDIT_PACKAGE" where name = '14 堂組合包方案')),
+   ((SELECT id FROM "USER" WHERE email = 'wXlTq@hexschooltest.io'),
+   (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '21 堂組合包方案'),
+   (select credit_amount from "CREDIT_PACKAGE" where name = '21 堂組合包方案'),
+   (select price from "CREDIT_PACKAGE" where name = '21 堂組合包方案')),
+   ((SELECT id FROM "USER" WHERE email = 'richman@hexschooltest.io'),
+   (SELECT id FROM "CREDIT_PACKAGE" WHERE name = '14 堂組合包方案'),
+   (select credit_amount from "CREDIT_PACKAGE" where name = '14 堂組合包方案'),
+   (select price from "CREDIT_PACKAGE" where name = '14 堂組合包方案'));
 
 -- ████████  █████   █    ████   
 --   █ █   ██    █  █         ██ 
